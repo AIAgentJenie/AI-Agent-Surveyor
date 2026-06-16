@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AI Agent Surveyor">
+    <meta name="theme-color" content="#0366d6">
+    <link rel="manifest" href="manifest.json">
+    <title>AI Agent Surveyor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0366d6 0%, #6f42c1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #24292e;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: #0366d6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: background 0.3s ease;
+        }
+        .download-btn:hover {
+            background: #0256c7;
+        }
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f6f8fa;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .instructions h3 {
+            color: #24292e;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .instructions ol {
+            color: #666;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        .platform-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🔍</div>
+        <h1>AI Agent Surveyor</h1>
+        <p class="subtitle">Add to your home screen for quick access</p>
+        
+        <button class="download-btn" onclick="addToHomeScreen()">
+            📱 Add to Home Screen
+        </button>
+        
+        <div class="instructions">
+            <div class="platform-section">
+                <h3>📱 iOS Instructions:</h3>
+                <ol>
+                    <li>Tap the Share button (square with arrow)</li>
+                    <li>Scroll down and select "Add to Home Screen"</li>
+                    <li>Verify the name is "AI Agent Surveyor"</li>
+                    <li>Tap "Add" in the top right</li>
+                </ol>
+            </div>
+            
+            <div class="platform-section">
+                <h3>🤖 Android Instructions:</h3>
+                <ol>
+                    <li>Tap the menu button (three vertical dots)</li>
+                    <li>Select "Install app" or "Add to Home Screen"</li>
+                    <li>Confirm the installation</li>
+                    <li>The app will appear on your home screen</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function addToHomeScreen() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('Please use your browser\'s built-in "Add to Home Screen" feature');
+            }
+        }
+    </script>
+</body>
+</html>
